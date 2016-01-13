@@ -3,7 +3,7 @@ define nvm::node::install (
   $user,
   $nvm_dir     = "/home/${user}/.nvm",
   $version     = $title,
-  $default     = false,
+  $set_default = false,
   $from_source = false,
 ) {
 
@@ -15,7 +15,7 @@ define nvm::node::install (
   validate_string($user)
   validate_string($nvm_dir)
   validate_string($version)
-  validate_bool($default)
+  validate_bool($set_default)
   validate_bool($from_source)
 
   if $from_source {
@@ -34,7 +34,7 @@ define nvm::node::install (
     provider    => shell,
   }
 
-  if $default {
+  if $set_default {
     exec { "nvm set node version ${version} as default":
       command     => ". ${nvm_dir}/nvm.sh && nvm alias default ${version}",
       user        => $user,
